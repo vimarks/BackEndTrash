@@ -56,6 +56,15 @@ class TrashesController < ApplicationController
     end
   end
 
+  def patchBounty
+
+    trash = Trash.find(params[:id])
+    trash.bounty = params['bounty'].to_i
+    trash.save
+    render json: {allTrash: Trash.all}
+
+  end
+
   def update
     trash = Trash.find(params[:id])
     if trash.cleaned === "dirty"
@@ -78,9 +87,14 @@ class TrashesController < ApplicationController
 
     end
 
-    render json: {allTrash: Trash.all}
+    render json: {allTrash: Trash.all.select { |trash| trash.cleaned != "confirmed"},
+                  userTrash: Trash.all.select { |trash| trash.reporter_id === reporter_id }
+                      .select { |trash| trash.cleaned != "confirmed"}
+                      .map { |trash| trash.location }
+                  }
 
   end
+
 
   def destroy
 

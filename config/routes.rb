@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   get '/profile', to: 'users#profile'
   post '/trashes/getUserTrash', to: 'trashes#getUserTrash'
   post '/wallets/getUserWallet', to: 'wallets#getUserWallet'
+  patch '/trashes/patchBounty/:id', to: 'trashes#patchBounty'
   resources :sessions, only: [:create]
 end
