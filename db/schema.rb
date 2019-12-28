@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_11_170231) do
+ActiveRecord::Schema.define(version: 2019_12_16_201115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "locations", force: :cascade do |t|
-    t.integer "latitude"
-    t.integer "longitude"
+    t.float "latitude"
+    t.float "longitude"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2019_12_11_170231) do
   create_table "trashes", force: :cascade do |t|
     t.integer "bounty"
     t.integer "location_id"
-    t.boolean "cleaned"
+    t.string "cleaned"
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
