@@ -31,6 +31,18 @@ class TrashesController < ApplicationController
 
   end
 
+  def getTrophies
+
+    trash = Trash.all
+    user_id = params["user_id"].to_i
+    userTrophies = trash.select { |trash| trash.cleaner_id === user_id}
+                        .select { |trash| trash.cleaned == "confirmed"}
+    render json: {
+      userTrophies: userTrophies
+    }
+
+  end
+
 
   def create
 
