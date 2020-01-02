@@ -8,7 +8,7 @@ class AuthController < ApplicationController
       # encode token comes from ApplicationController
       puts "Verified User!"
       token = encode_token({ user_id: @user.id })
-      render json: { user: UserSerializer.new(@user), jwt: token, id: @user.id  }, status: :accepted
+      render json: { user: UserSerializer.new(@user), jwt: token, id: @user.id, username: @user.username  }, status: :accepted
     else
       render json: { message: 'Invalid username or password' }, status: :unauthorized
     end
