@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :users, only: [:create]
   post '/login', to: 'auth#create'
   get '/profile', to: 'users#profile'
-  post '/trashes/getUserTrash', to: 'trashes#getUserTrash'
+  post '/trashes/getUserTrashCoords', to: 'trashes#getUserTrashCoords'
   post '/trashes/getTrophies', to: 'trashes#getTrophies'
   post '/wallets/getUserWallet', to: 'wallets#getUserWallet'
   patch '/trashes/patchBounty/:id', to: 'trashes#patchBounty'

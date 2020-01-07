@@ -11,20 +11,20 @@ class TrashesController < ApplicationController
 
   end
 
-  def getUserTrash
+  def getUserTrashCoords
 
     trash = Trash.all
     reporter_id = params["reporter_id"].to_i
     if Trash.all.find { |trash| trash.reporter_id === reporter_id}
       render json: {
         trash: trash,
-        userTrash: trash.select { |trash| trash.reporter_id === reporter_id }
+        userTrashCoords: trash.select { |trash| trash.reporter_id === reporter_id }
                         .select { |trash| trash.cleaned != "confirmed"}
                         .map { |trash| trash.location }
       }
     else
       render json: {
-        userTrash: [],
+        userTrashCoords: [],
         trash: trash
       }
     end
@@ -63,7 +63,7 @@ class TrashesController < ApplicationController
     if trash.save
       render json: {
       trash: Trash.all,
-      userTrash: Trash.all.select { |trash| trash.reporter_id === reporter_id }.map { |trash| trash.location}
+      userTrashCoords: Trash.all.select { |trash| trash.reporter_id === reporter_id }.map { |trash| trash.location}
       }
     end
   end
@@ -100,7 +100,7 @@ class TrashesController < ApplicationController
     end
 
     render json: {allTrash: Trash.all.select { |trash| trash.cleaned != "confirmed"},
-                  userTrash: Trash.all.select { |trash| trash.reporter_id === reporter_id }
+                  userTrashCoords: Trash.all.select { |trash| trash.reporter_id === reporter_id }
                       .select { |trash| trash.cleaned != "confirmed"}
                       .map { |trash| trash.location }
                   }
