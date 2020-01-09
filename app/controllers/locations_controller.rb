@@ -10,6 +10,7 @@ class LocationsController < ApplicationController
         render json: {
           id: location.id
         }
+      
       end
   end
 end
