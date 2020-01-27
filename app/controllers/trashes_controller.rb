@@ -5,8 +5,6 @@ class TrashesController < ApplicationController
     if trash
       render json: {
         trash: trash,
-        trashLocations: trash.select { |trash| trash.cleaned != "confirmed"}
-        .map { |trash| trash.location },
         cleanTrashLocations: trash.select { |trash| trash.cleaned === "clean"}
         .map { |trash| trash.location },
         dirtyTrashLocations: trash.select { |trash| trash.cleaned === "dirty"}
