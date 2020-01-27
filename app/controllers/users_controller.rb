@@ -9,10 +9,11 @@ class UsersController < ApplicationController
 
     @user = User.create(user_params)
     if @user.valid?
-      wallet = Wallet.create(user_id: @user.id, balance: 100)
+      @wallet = Wallet.create(user_id: @user.id, balance: 100)
       @token = encode_token({ user_id: @user.id })
-      render json: { user: UserSerializer.new(@user), jwt: @token, wallet: wallet}, status: :created
+      render json: { user: UserSerializer.new(@user), jwt: @token, wallet: @wallet}, status: :created
     else
+      puts "unable to create user!!!!"
       render json: { error: 'failed to create user' }, status: :not_acceptable
     end
   end
