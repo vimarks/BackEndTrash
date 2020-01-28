@@ -10,7 +10,8 @@ GEM
       activejob (= 6.0.1)
       activerecord (= 6.0.1)
       activestorage (= 6.0.1)
-      activesupport (= 6.0.1)
+      activesup
+       (= 6.0.1)
       mail (>= 2.7.1)
     actionmailer (6.0.1)
       actionpack (= 6.0.1)
