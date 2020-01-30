@@ -21,7 +21,7 @@ location3 = Location.create(latitude: 30.254116, longitude: -97.747039)
 location4 = Location.create(latitude: 30.255116, longitude: -97.740639)
 location5 = Location.create(latitude: 30.256116, longitude: -97.740839)
 
- trash1 = Trash.create(bounty: 15, location_id: 4, cleaner_id: nil , reporter_id: 4, cleaned: "dirty", description: "Bottles in river")
+ trash1 = Trash.create(bounty: 15, location_id: 4, cleaner_id: nil , reporter_id: 5, cleaned: "dirty", description: "Bottles in river")
 trash2 = Trash.create(bounty: 85, location_id: 3, cleaner_id: nil, reporter_id: 5, cleaned: "dirty", description: "On the south shore of LadyBird lake, right by Joe's Crab Shack")
 # trash3 = Trash.create(bounty: 5, location_id: 2, cleaner_id: nil, reporter_id: 5, cleaned: "dirty", description: "Edge of the woods across from the Burger King")
 # trash4 = Trash.create(bounty: 35, location_id: 1, cleaner_id: nil, reporter_id: 5, cleaned: "dirty", description: "Big pile of bottles near the cemetary")

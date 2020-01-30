@@ -10,7 +10,22 @@ class LocationsController < ApplicationController
         render json: {
           id: location.id
         }
-      
+
       end
+  end
+  def update
+      location = Location.find(params[:id].to_i)
+      latitude =  params["latitude"]
+      longitude = params["longitude"]
+      location.latitude = latitude
+      location.longitude = longitude
+      puts location.latitude
+      if location.save
+        render json: {
+          location: location
+        }
+      end
+
+
   end
 end
