@@ -22,7 +22,7 @@ class LocationsController < ApplicationController
       puts location.latitude
       if location.save
         render json: {
-          location: location
+          locations: Location.all
         }
       end
 
