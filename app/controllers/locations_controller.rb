@@ -14,6 +14,8 @@ class LocationsController < ApplicationController
       end
   end
   def update
+      reporter_id = params["reporter_id"].to_i
+      reporter_trash = Trash.select { |trash| trash.reporter_id === reporter_id }
       location = Location.find(params[:id].to_i)
       latitude =  params["latitude"]
       longitude = params["longitude"]
@@ -22,7 +24,8 @@ class LocationsController < ApplicationController
       puts location.latitude
       if location.save
         render json: {
-          locations: Location.all
+          dirtyUserTrashCoords: reporter_trash.select { |trash| trash.cleaned === "dirty"}
+                                              .map { |trash| trash.location }
         }
       end
 
