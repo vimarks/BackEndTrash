@@ -19,19 +19,23 @@ class TrashesController < ApplicationController
     trash = Trash.all
     reporter_id = params["reporter_id"].to_i
     reporter_trash = trash.select { |trash| trash.reporter_id === reporter_id }
+    wallet_balance = Wallet.find { |wallet| wallet.user_id === reporter_id }.balance
     if Trash.all.find { |trash| trash.reporter_id === reporter_id}
       render json: {
         trash: trash,
         dirtyUserTrashCoords: reporter_trash.select { |trash| trash.cleaned === "dirty"}
                                             .map { |trash| trash.location },
         cleanUserTrashCoords: reporter_trash.select { |trash| trash.cleaned === "clean"}
-                                            .map { |trash| trash.location }
+                                            .map { |trash| trash.location },
+        userBalance: wallet_balance
       }
     else
       render json: {
         dirtyUserTrashCoords: [],
         cleanUserTrashCoords: [],
-        trash: trash
+        trash: trash,
+        user_balance: wallet_balance
+
       }
     end
 
