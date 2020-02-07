@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
+  post '/login', to: 'auth#create'
   resources :trashes
   resources :locations
   resources :wallets
   resources :users, only: [:create]
-  post '/login', to: 'auth#create'
   get '/profile', to: 'users#profile'
   post '/trashes/getUserTrashCoords', to: 'trashes#getUserTrashCoords'
   post '/trashes/getTrophies', to: 'trashes#getTrophies'
