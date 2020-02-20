@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
     @user = User.create(user_params)
     if @user.valid?
+      @reputation = Reputation.create(user_id: @user.id, rating: 0.0)
       @wallet = Wallet.create(user_id: @user.id, balance: 100)
       @token = encode_token({ user_id: @user.id })
       render json: { user: UserSerializer.new(@user), jwt: @token, wallet: @wallet}, status: :created
