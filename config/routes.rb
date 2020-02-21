@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :reputations
   post '/login', to: 'auth#create'
   resources :trashes
   resources :locations
