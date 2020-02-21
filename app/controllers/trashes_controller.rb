@@ -9,7 +9,8 @@ class TrashesController < ApplicationController
         .map { |trash| trash.location },
         dirtyTrashLocations: trash.select { |trash| trash.cleaned === "dirty"}
         .map { |trash| trash.location },
-        users: User.all
+        users: User.all,
+        reputations: Reputation.all
 
       }
     end
