@@ -1,7 +1,7 @@
 class TrashesController < ApplicationController
   def index
 
-    trash = Trash
+    trash = Trash.all
     if trash
       render json: {
         trash: trash,
@@ -9,7 +9,9 @@ class TrashesController < ApplicationController
         .map { |trash| trash.location },
         dirtyTrashLocations: trash.select { |trash| trash.cleaned === "dirty"}
         .map { |trash| trash.location },
-        users: User
+        users: User.all,
+        reputations: Reputation.all
+
 
 
       }
