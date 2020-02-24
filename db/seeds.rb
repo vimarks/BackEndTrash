@@ -9,11 +9,7 @@ user3 = User.create(username: "boneCruncher", password: "123" )
 user4 = User.create(username: "fleshLumpEater", password: "123" )
 user5 = User.create(username: "BFG", password: "123" )
 
-rep1 = Reputation.create(user_id: 1, rating: 0.0)
-rep2 = Reputation.create(user_id: 2, rating: 0.0)
-rep3 = Reputation.create(user_id: 3, rating: 0.0)
-rep4 = Reputation.create(user_id: 4, rating: 0.0)
-rep5 = Reputation.create(user_id: 5, rating: 0.0)
+
 
 wallet1 = Wallet.create(balance: 100, user_id: 1)
 wallet2 = Wallet.create(balance: 50, user_id: 2)
