@@ -5,10 +5,14 @@ class ReputationsController < ApplicationController
 
   def create
     reporter_id = params[:reporter_id]
-    new_rating = params[:rating]
+    cleaner_id = params[:cleaner_id]
+    trash_id = params[:trash_id]
+    rating = params[:rating]
     new_rep = Reputation.new(
       user_id: reporter_id,
-      rating: new_rating
+      cleaner_id: cleaner_id.to_i,
+      trash_id: trash_id,
+      rating: rating
     )
     if new_rep.save
 
@@ -17,7 +21,7 @@ class ReputationsController < ApplicationController
     user_rating = users_reviews.map { |rev| rev[:rating]}.sum/count
 
     render json: {
-      avgRating: user_rating
+      reputations: Reputation.all
     }
     else
       puts "****** no reviews for this user ******"

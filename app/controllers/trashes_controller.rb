@@ -11,6 +11,7 @@ class TrashesController < ApplicationController
         .map { |trash| trash.location },
         users: User.all,
         reputations: Reputation.all
+        
 
 
 
