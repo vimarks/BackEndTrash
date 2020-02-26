@@ -1,20 +1,19 @@
 class TrashesController < ApplicationController
-  def index
-
+  def initialCFetch
+    cleaner_id = params["cleaner_id"].to_i
     trash = Trash.all
     if trash
       render json: {
         trash: trash,
-        cleanTrashLocations: trash.select { |trash| trash.cleaned === "clean"}
-        .map { |trash| trash.location },
-        dirtyTrashLocations: trash.select { |trash| trash.cleaned === "dirty"}
-        .map { |trash| trash.location },
+        cleanTrashLocations: trash
+          .select { |trash| trash.cleaner_id === cleaner_id}
+          .select { |trash| trash.cleaned === "clean"}
+          .map { |trash| trash.location },
+        dirtyTrashLocations: trash
+          .select { |trash| trash.cleaned === "dirty"}
+          .map { |trash| trash.location },
         users: User.all,
         reputations: Reputation.all
-        
-
-
-
       }
     end
 
@@ -36,11 +35,12 @@ class TrashesController < ApplicationController
         userBalance: wallet_balance
       }
     else
+      puts "************ no trash yet **************"
       render json: {
         dirtyUserTrashCoords: [],
         cleanUserTrashCoords: [],
         trash: trash,
-        user_balance: wallet_balance
+        userBalance: wallet_balance
 
       }
     end

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :wallets
   resources :users, only: [:create]
   get '/profile', to: 'users#profile'
+  post '/trashes/initialCFetch', to: 'trashes#initialCFetch'
   post '/trashes/getUserTrashCoords', to: 'trashes#getUserTrashCoords'
   post '/trashes/getTrophies', to: 'trashes#getTrophies'
   post '/wallets/getUserWallet', to: 'wallets#getUserWallet'
