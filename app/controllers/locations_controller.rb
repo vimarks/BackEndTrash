@@ -13,6 +13,7 @@ class LocationsController < ApplicationController
 
       end
   end
+
   def update
       reporter_id = params["reporter_id"].to_i
       reporter_trash = Trash.select { |trash| trash.reporter_id === reporter_id }

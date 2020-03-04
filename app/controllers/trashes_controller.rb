@@ -59,7 +59,6 @@ class TrashesController < ApplicationController
 
   end
 
-
   def create
 
     bounty = params["bounty"]
@@ -117,6 +116,17 @@ class TrashesController < ApplicationController
       reporterWallet.balance = reporterWallet.balance - bounty
       cleanerWallet.save
       reporterWallet.save
+
+      rep = Reputation.new(
+        user_id: reporter_id,
+        cleaner_id: cleaner_id.to_i,
+        trash_id: trash,
+        rating: 5
+      )
+
+      rep.save
+
+
 
     end
 
