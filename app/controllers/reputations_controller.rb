@@ -16,12 +16,14 @@ class ReputationsController < ApplicationController
     )
     if new_rep.save
 
-    users_reviews = Reputation.all.select { |reputation| reputation.user_id === reporter_id }
-    count = users_reviews.length
-    user_rating = users_reviews.map { |rev| rev[:rating]}.sum/count
+    # users_reviews = Reputation.all.select { |reputation| reputation.user_id === reporter_id }
+    # count = users_reviews.length
+    # user_rating = users_reviews.map { |rev| rev[:rating]}.sum/count
 
     render json: {
       reputations: Reputation.all
+
+      
     }
     else
       puts "****** no reviews for this user ******"
