@@ -22,7 +22,6 @@ class LocationsController < ApplicationController
       longitude = params["longitude"]
       location.latitude = latitude
       location.longitude = longitude
-      puts location.latitude
       if location.save
         render json: {
           dirtyUserTrashCoords: reporter_trash.select { |trash| trash.cleaned === "dirty"}

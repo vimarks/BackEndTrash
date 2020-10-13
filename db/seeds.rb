@@ -3,6 +3,11 @@ Wallet.destroy_all
 Location.destroy_all
 Trash.destroy_all
 
+
+ActiveRecord::Base.connection.tables.each do |t|
+  ActiveRecord::Base.connection.reset_pk_sequence!(t)
+end
+
 user1 = User.create(username: "pabstbottle7", password: "123" )
 user2 = User.create(username: "vimarks", password: "123" )
 user3 = User.create(username: "boneCruncher", password: "123" )
@@ -17,11 +22,11 @@ wallet3 = Wallet.create(balance: 200, user_id: 3)
 wallet4 = Wallet.create(balance: 75, user_id: 4)
 wallet5 = Wallet.create(balance: 50, user_id: 5)
 
-# location1 = Location.create(latitude: 30.254652, longitude: -97.749227)
-# location2 = Location.create(latitude: 30.253318, longitude: -97.716283)
-# location3 = Location.create(latitude: 30.254116, longitude: -97.747039)
+location1 = Location.create(latitude: 30.254652, longitude: -97.749227)
+location2 = Location.create(latitude: 30.253318, longitude: -97.716283)
+location3 = Location.create(latitude: 30.254116, longitude: -97.747039)
 location4 = Location.create(latitude: 30.255116, longitude: -97.740639)
-# location5 = Location.create(latitude: 30.256116, longitude: -97.740839)
+location5 = Location.create(latitude: 30.256116, longitude: -97.740839)
 #
 trash1 = Trash.create(bounty: 15, location_id: 1, cleaner_id: nil , reporter_id: 5, cleaned: "dirty", description: "Bottles in river")
 # trash2 = Trash.create(bounty: 85, location_id: 3, cleaner_id: nil, reporter_id: 5, cleaned: "dirty", description: "On the south shore of LadyBird lake, right by Joe's Crab Shack")
