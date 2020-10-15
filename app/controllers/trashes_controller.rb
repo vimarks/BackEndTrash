@@ -2,6 +2,8 @@ class TrashesController < ApplicationController
   def initialCFetch
     cleaner_id = params["cleaner_id"].to_i
     trash = Trash.all
+    rated_trash_ids = Reputation.all.select { |rep| rep.trash_id != nil}
+                                    .map { |rep| rep.trash_id}
     if trash
       render json: {
         trash: trash,
@@ -12,6 +14,11 @@ class TrashesController < ApplicationController
         dirtyTrashLocations: trash
           .select { |trash| trash.cleaned === "dirty"}
           .map { |trash| trash.location },
+        confirmedTrashLocations: trash
+          .select { |trash| trash.cleaner_id === cleaner_id}
+          .select { |trash| trash.cleaned === "confirmed"}
+          .select { |trash| !rated_trash_ids.include? trash.id}
+          .map { |trash| trash.location},
         users: User.all,
         reputations: Reputation.all
       }
