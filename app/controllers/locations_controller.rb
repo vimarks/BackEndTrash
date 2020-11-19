@@ -25,7 +25,7 @@ class LocationsController < ApplicationController
       if location.save
         render json: {
           dirtyUserTrashCoords: reporter_trash.select { |trash| trash.cleaned === "dirty"}
-                                              .map { |trash| trash.location }
+                                              .map { |trash| trash.location}
         }
       end
 
