@@ -30,6 +30,7 @@ class TrashesController < ApplicationController
   def myTrash
     trash = Trash.all
     locations = Location.all
+
     currentUser_id = params["currentUser_id"].to_i
     clean_success = trash.select { |tr| tr.cleaner_id === currentUser_id && tr.cleaned === "confirmed" }
     clean_success_coords = clean_success.map { |tr| tr.location }
@@ -44,7 +45,7 @@ class TrashesController < ApplicationController
     wallet_balance = Wallet.find { |wallet| wallet.user_id === currentUser_id }.balance
 
       render json: {
-        allTrash: trash,
+        allTrash: Trash.all,
         clean_success: clean_success,
         clean_success_coords: clean_success_coords,
         pending_their_confirm: pending_their_confirm,
@@ -57,7 +58,8 @@ class TrashesController < ApplicationController
         pending_your_confirm_coords: pending_your_confirm_coords,
         userBalance: wallet_balance,
         allImages: Image.all,
-        allUsers: User.all
+        allUsers: User.all,
+        allReputations: Reputation.all
       }
   end
 
@@ -91,12 +93,12 @@ class TrashesController < ApplicationController
       )
     if trash.save
       render json: {
-      id: trash.id,
-      trash: Trash.all,
-      dirtyUserTrashCoords: Trash.select { |trash| trash.reporter_id === reporter_id }
+        id: trash.id,
+        trash: Trash.all,
+        dirtyUserTrashCoords: Trash.select { |trash| trash.reporter_id === reporter_id }
                       .select { |trash| trash.cleaned === "dirty"}
                       .map { |trash| trash.location },
-      cleanUserTrashCoords: Trash.select { |trash| trash.reporter_id === reporter_id }
+        cleanUserTrashCoords: Trash.select { |trash| trash.reporter_id === reporter_id }
                       .select { |trash| trash.cleaned === "clean"}
                       .map { |trash| trash.location }
       }
@@ -105,9 +107,15 @@ class TrashesController < ApplicationController
 
   def patchBounty
     trash = Trash.find(params[:id])
-    trash.bounty = params['bounty'].to_i
+    currentUser_id = params[:currentUser_id].to_i
+    params[:patchBody].keys.map { |key| trash[key] = params[:patchBody][key]}
+    trash.bounty = trash.bounty.to_i
     trash.save
-    render json: {allTrash: Trash.all}
+    pending_clean = Trash.all.select { |tr| tr.reporter_id === currentUser_id && tr.cleaned === "dirty" }
+    render json: {
+      allTrash: Trash.all,
+      pending_clean: pending_clean
+    }
   end
 
   def update
@@ -138,7 +146,8 @@ class TrashesController < ApplicationController
       )
       rep.save
     end
-
+    pending_your_confirm = Trash.all.select { |tr| tr.reporter_id === reporter_id && tr.cleaned === "clean" }
+    report_success = Trash.all.select { |tr| tr.reporter_id === reporter_id && tr.cleaned === "confirmed" }
     reporter_trash = Trash.select { |trash| trash.reporter_id === reporter_id }
     render json: {allTrash: Trash.all.select { |trash| trash.cleaned != "confirmed"},
                   dirtyUserTrashCoords: reporter_trash.select { |trash| trash.cleaned == "dirty"}
@@ -148,7 +157,10 @@ class TrashesController < ApplicationController
                   dirtyTrashLocations: Trash.all.select { |trash| trash.cleaned == "dirty"}
                                                  .map { |trash| trash.location},
                   cleanTrashLocations: Trash.all.select { |trash| trash.cleaned == "clean"}
-                                                 .map { |trash| trash.location}
+                                                 .map { |trash| trash.location},
+                  report_success: report_success,
+                  pending_your_confirm: pending_your_confirm,
+                  trash: Trash.all
                   }
   end
 
