@@ -113,8 +113,8 @@ class TrashesController < ApplicationController
     trash.save
     pending_clean = Trash.all.select { |tr| tr.reporter_id === currentUser_id && tr.cleaned === "dirty" }
     render json: {
-      pending_clean: pending_clean
       allTrash: Trash.all,
+      pending_clean: pending_clean
     }
   end
 
